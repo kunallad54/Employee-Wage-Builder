@@ -6,3 +6,4 @@
 4. This project will solve the problems using switch case
 5. This project will calculate wage of employee for one month (assuming month of 20 days)
 6. This project will calculate wage till total working hours or total working days are met for month(assumming month of 20 days and working hours=100)
+7. This project will make use of instance method,variables and solve the problem
