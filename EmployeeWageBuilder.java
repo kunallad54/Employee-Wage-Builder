@@ -1,3 +1,5 @@
+package com.company.day9;
+
 /**
  * This project computes Employee Wage for multiple companies - Note: Each Company has its own wage, number of working days
  * and working hours per month:
@@ -54,7 +56,7 @@ public class EmployeeWageBuilder {
         int fullTimeCount = 0;
         int partTimeCount = 0;
         int totalWorkingHours = 0;
-        int salary = 0;
+        int totalEmpWage = 0;
 
         // checks attendance and calculates salary for month or total working days
         for (int i = 1; i <= totalDays; i++) {
@@ -86,23 +88,23 @@ public class EmployeeWageBuilder {
             }
 
             int wageForTheDay = wageCalculator(hourlyWage, empHrs);
-            salary += wageForTheDay;
+            totalEmpWage += wageForTheDay;
 
         }
 
-        displayInfo(company, absentCount, fullTimeCount, partTimeCount, totalWorkingHours, salary);
+        displayInfo(company, absentCount, fullTimeCount, partTimeCount, totalWorkingHours, totalEmpWage);
 
     }
 
     // displays all information on console
-    public static void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours, int sal) {
+    public static void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours, int totalEmpWage) {
 
         System.out.println("Following gives the Employee Wage Details for the company : " + cName);
         System.out.println("Employee Absent : " + aCount + " days");
         System.out.println("Employee Full Time : " + fTCount + " days");
         System.out.println("Employee Part Time : " + pTCount + " days");
         System.out.println("Total Working Hours : " + tHours + " hours");
-        System.out.println("Employee Salary is : " + sal + " Rs /-");
+        System.out.println("Employee total wage is : " + totalEmpWage + " Rs /-");
 
     }
 
