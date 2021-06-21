@@ -79,6 +79,7 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
                 break;
             }
 
+            // stores employee wage for the day
             int wageForTheDay = wageCalculator(companyEmpWage.wagePerHour, empHrs);
             totalEmpWage += wageForTheDay;
         }
@@ -116,4 +117,3 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
         employeeWageBuilder.computeEmpWage();
     }
 }
-
