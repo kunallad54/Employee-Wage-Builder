@@ -1,9 +1,10 @@
 package com.company.day9;
 
+import java.util.ArrayList;
+
 /**
- * Ability to manage Employee Wage of multiple companies
- * - Note: Refactor to have one EmpWageBuilder to manage for Wage for multiple Company
- * - Create CompanyEmpWage class and let EmpWageBuilder has array of many CompanyEmpWage Object
+ * Refactor to have list of multiple companies to manage Employee Wage.
+ * - Note: Refactor to use ArrayList instead of array
  *
  * @author Krunal Lad
  * @Since 21-06-2021
@@ -18,24 +19,26 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
     private static final int PART_TIME = 2;
     private int numOfCompany = 0;
     private CompanyEmpWage[] companyEmpWageArray;
-
+    private ArrayList<CompanyEmpWage> companyEmpWageArrayList;
     // created array of type CompanyEmpWage
     public EmployeeWageBuilder() {
         companyEmpWageArray = new CompanyEmpWage[5];
+        companyEmpWageArrayList = new ArrayList<>();
     }
 
     @Override
     public void addCompanyEmpWage(String companyName,int wagePerHour,int numberOfWorkingDays,int maxWorkingHours){
-        companyEmpWageArray[numOfCompany]=new CompanyEmpWage(companyName,wagePerHour,numberOfWorkingDays,maxWorkingHours);
+        CompanyEmpWage companyEmpWage=new CompanyEmpWage(companyName,wagePerHour,numberOfWorkingDays,maxWorkingHours);
 
-        numOfCompany++;
+        companyEmpWageArrayList.add(companyEmpWage);
     }
 
     @Override
     public void computeEmpWage(){
-        for (int i = 0; i < numOfCompany; i++){
-            companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
-            System.out.println(companyEmpWageArray[i]);
+        for (int i = 0; i < companyEmpWageArrayList.size(); i++){
+            CompanyEmpWage companyEmpWage = companyEmpWageArrayList.get(i);
+            companyEmpWage.setTotalEmpWage(this.computeEmpWage(companyEmpWage));
+            System.out.println(companyEmpWage);
         }
     }
 
