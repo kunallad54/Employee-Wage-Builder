@@ -16,3 +16,4 @@
     Interface approach - Note: Refactor to have one EmpWageBuilder
 12. Refactor to have list of multiple companies to manage Employee Wage.
     - Note: Refactor to use ArrayList instead of array
+13. Store the Daily Wage along with the Total Wage
