@@ -10,4 +10,6 @@ public interface EmployeeWageInterface {
     void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours);
 
     int wageCalculator(int hourlyWage, int empHrs);
+
+    int getTotalEmpWage(String companyName);
 }

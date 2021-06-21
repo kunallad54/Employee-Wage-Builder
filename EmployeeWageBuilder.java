@@ -1,10 +1,12 @@
 package com.company.day9;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Refactor to have list of multiple companies to manage Employee Wage.
- * - Note: Refactor to use ArrayList instead of array
+ *Final Employee Wage Builder can compute total employee wage, daily wage for multiple Companies
+ * Used Arraylist,Map concepts
  *
  * @author Krunal Lad
  * @Since 21-06-2021
@@ -17,13 +19,12 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
     private static final int ABSENT = 0;
     private static final int FULL_TIME = 1;
     private static final int PART_TIME = 2;
-    private int numOfCompany = 0;
-    private CompanyEmpWage[] companyEmpWageArray;
     private ArrayList<CompanyEmpWage> companyEmpWageArrayList;
+    private Map<String,CompanyEmpWage>companyEmpWageMap;
     // created array of type CompanyEmpWage
     public EmployeeWageBuilder() {
-        companyEmpWageArray = new CompanyEmpWage[5];
         companyEmpWageArrayList = new ArrayList<>();
+        companyEmpWageMap = new HashMap<>();
     }
 
     @Override
@@ -106,6 +107,11 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
         return hourlyWage * empHrs;
     }
 
+    @Override
+    public int getTotalEmpWage(String companyName){
+        return companyEmpWageMap.get(companyName).totalEmpWage;
+    }
+
     //main method
     public static void main(String[] args) {
 
@@ -114,6 +120,10 @@ public class EmployeeWageBuilder implements EmployeeWageInterface{
         employeeWageBuilder.addCompanyEmpWage("D-MART",20,20,100);
         System.out.println();
         employeeWageBuilder.addCompanyEmpWage("Reliance Retail",10,30,200);
+        System.out.println();
+        employeeWageBuilder.addCompanyEmpWage("Vijay Stores",15,25,150);
         employeeWageBuilder.computeEmpWage();
+
+        System.out.println("Total Wage for Reliance Retail is : "+employeeWageBuilder.getTotalEmpWage("Reliance Retail"));
     }
 }
