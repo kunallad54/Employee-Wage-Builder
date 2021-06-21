@@ -9,8 +9,9 @@ package com.company.day9;
  * @Since 21-06-2021
  */
 
-public class EmployeeWageBuilder {
+public class EmployeeWageBuilder implements EmployeeWageInterface{
 
+    static EmployeeWageBuilder employeeWageBuilder = new EmployeeWageBuilder();
     // declaring instance variables
     private static final int ABSENT = 0;
     private static final int FULL_TIME = 1;
@@ -23,20 +24,23 @@ public class EmployeeWageBuilder {
         companyEmpWageArray = new CompanyEmpWage[5];
     }
 
-    private void addCompanyEmpWage(String companyName,int wagePerHour,int numberOfWorkingDays,int maxWorkingHours){
+    @Override
+    public void addCompanyEmpWage(String companyName,int wagePerHour,int numberOfWorkingDays,int maxWorkingHours){
         companyEmpWageArray[numOfCompany]=new CompanyEmpWage(companyName,wagePerHour,numberOfWorkingDays,maxWorkingHours);
 
         numOfCompany++;
     }
 
-    private void computeEmpWage(){
+    @Override
+    public void computeEmpWage(){
         for (int i = 0; i < numOfCompany; i++){
             companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
             System.out.println(companyEmpWageArray[i]);
         }
     }
 
-    private int computeEmpWage(CompanyEmpWage companyEmpWage){
+    @Override
+    public int computeEmpWage(CompanyEmpWage companyEmpWage){
         int absentCount = 0;
         int fullTimeCount = 0;
         int partTimeCount = 0;
@@ -79,19 +83,10 @@ public class EmployeeWageBuilder {
         displayInfo(companyEmpWage.companyName, absentCount, fullTimeCount, partTimeCount, totalWorkingHours);
         return totalEmpWage;
     }
-    //main method
-    public static void main(String[] args) {
 
-        System.out.println("Welcome to Employee Wage Computation Program !!! ");
-        EmployeeWageBuilder employeeWageBuilder = new EmployeeWageBuilder();
-
-        employeeWageBuilder.addCompanyEmpWage("D-MART",20,20,100);
-        System.out.println();
-        employeeWageBuilder.addCompanyEmpWage("Reliance Retail",10,30,200);
-        employeeWageBuilder.computeEmpWage();
-    }
     // displays all information on console
-    public static void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours) {
+    @Override
+    public void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours) {
 
         System.out.println("Following gives the Employee Wage Details for the company : " + cName);
         System.out.println("Employee Absent : " + aCount + " days");
@@ -102,7 +97,20 @@ public class EmployeeWageBuilder {
     }
 
     // returns wage for the day
-    public static int wageCalculator(int hourlyWage, int empHrs) {
+    @Override
+    public int wageCalculator(int hourlyWage, int empHrs) {
         return hourlyWage * empHrs;
     }
+
+    //main method
+    public static void main(String[] args) {
+
+        System.out.println("Welcome to Employee Wage Computation Program !!! ");
+
+        employeeWageBuilder.addCompanyEmpWage("D-MART",20,20,100);
+        System.out.println();
+        employeeWageBuilder.addCompanyEmpWage("Reliance Retail",10,30,200);
+        employeeWageBuilder.computeEmpWage();
+    }
 }
+
