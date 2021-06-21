@@ -12,3 +12,5 @@
 10. Ability to manage Employee Wage of multiple companies
    - Note: Refactor to have one EmpWageBuilder to manage for Wage for multiple Company
    - Create CompanyEmpWage class and let EmpWageBuilder has array of many CompanyEmpWage Object
+11. Ability to manage Employee Wage of multiple companies using
+    Interface approach - Note: Refactor to have one EmpWageBuilder
