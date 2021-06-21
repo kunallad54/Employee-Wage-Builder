@@ -1,15 +1,12 @@
 package com.company.day9;
 
 /**
- * This project computes Employee Wage for multiple companies - Note: Each Company has its own wage, number of working days
- * and working hours per month:
- * This project calculates Employee Wage for Two Companies : 1.DMART 2.Reliance Retail
- * For DMART : wage per hour = 20,number of working days = 20, maximum working hours = 100
- * For Reliance Retail : wage per hour = 10,number of working days = 30, maximum working hours = 200
- * It can calculate employee wage for multiple companies just need to create object for that company and give details
+ * Ability to manage Employee Wage of multiple companies
+ * - Note: Refactor to have one EmpWageBuilder to manage for Wage for multiple Company
+ * - Create CompanyEmpWage class and let EmpWageBuilder has array of many CompanyEmpWage Object
  *
  * @author Krunal Lad
- * @Since 15-06-2021
+ * @Since 21-06-2021
  */
 
 public class EmployeeWageBuilder {
@@ -18,40 +15,28 @@ public class EmployeeWageBuilder {
     private static final int ABSENT = 0;
     private static final int FULL_TIME = 1;
     private static final int PART_TIME = 2;
-    private final String companyName;
-    private final int wagePerHour;
-    private final int numberOfWorkingDays;
-    private final int maxWorkingHours;
+    private int numOfCompany = 0;
+    private CompanyEmpWage[] companyEmpWageArray;
 
-    // creating constructor
-    private EmployeeWageBuilder(String companyName, int wagePerHour, int numberOfWorkingDays, int maxWorkingHours) {
-
-        this.companyName = companyName;
-        this.wagePerHour = wagePerHour;
-        this.numberOfWorkingDays = numberOfWorkingDays;
-        this.maxWorkingHours = maxWorkingHours;
-
+    // created array of type CompanyEmpWage
+    public EmployeeWageBuilder() {
+        companyEmpWageArray = new CompanyEmpWage[5];
     }
 
-    //main method
-    public static void main(String[] args) {
+    private void addCompanyEmpWage(String companyName,int wagePerHour,int numberOfWorkingDays,int maxWorkingHours){
+        companyEmpWageArray[numOfCompany]=new CompanyEmpWage(companyName,wagePerHour,numberOfWorkingDays,maxWorkingHours);
 
-        System.out.println("Welcome to Employee Wage Computation Program !!! ");
-
-        // creating object for Dmart company and storing their details regarding employee wage
-        EmployeeWageBuilder dmart = new EmployeeWageBuilder("D-MART", 20, 20, 100);
-
-        // creating object for Reliance Retail company and storing their details regarding employee wage
-        EmployeeWageBuilder reliance = new EmployeeWageBuilder("Reliance Retail", 10, 30, 200);
-
-        employeeAttendanceChecker(dmart.companyName, dmart.wagePerHour, dmart.numberOfWorkingDays, dmart.maxWorkingHours);
-        System.out.println();
-        employeeAttendanceChecker(reliance.companyName, reliance.wagePerHour, reliance.numberOfWorkingDays, reliance.maxWorkingHours);
+        numOfCompany++;
     }
 
-    // Checks employee attendance and calculates Salary
-    private static void employeeAttendanceChecker(String company, int hourlyWage, int totalDays, int maxHours) {
+    private void computeEmpWage(){
+        for (int i = 0; i < numOfCompany; i++){
+            companyEmpWageArray[i].setTotalEmpWage(this.computeEmpWage(companyEmpWageArray[i]));
+            System.out.println(companyEmpWageArray[i]);
+        }
+    }
 
+    private int computeEmpWage(CompanyEmpWage companyEmpWage){
         int absentCount = 0;
         int fullTimeCount = 0;
         int partTimeCount = 0;
@@ -59,7 +44,7 @@ public class EmployeeWageBuilder {
         int totalEmpWage = 0;
 
         // checks attendance and calculates salary for month or total working days
-        for (int i = 1; i <= totalDays; i++) {
+        for (int i = 1; i <= companyEmpWage.numberOfWorkingDays; i++) {
 
             int empHrs = 0;
             int empCheck = (int) Math.floor(Math.random() * 10) % 3;
@@ -82,29 +67,37 @@ public class EmployeeWageBuilder {
             }
             totalWorkingHours += empHrs;
 
-            if (totalWorkingHours >= maxHours) {
-                totalWorkingHours = maxHours;
+            if (totalWorkingHours >= companyEmpWage.maxWorkingHours) {
+                totalWorkingHours = companyEmpWage.maxWorkingHours;
                 break;
             }
 
-            int wageForTheDay = wageCalculator(hourlyWage, empHrs);
+            int wageForTheDay = wageCalculator(companyEmpWage.wagePerHour, empHrs);
             totalEmpWage += wageForTheDay;
-
         }
-
-        displayInfo(company, absentCount, fullTimeCount, partTimeCount, totalWorkingHours, totalEmpWage);
-
+        System.out.println();
+        displayInfo(companyEmpWage.companyName, absentCount, fullTimeCount, partTimeCount, totalWorkingHours);
+        return totalEmpWage;
     }
+    //main method
+    public static void main(String[] args) {
 
+        System.out.println("Welcome to Employee Wage Computation Program !!! ");
+        EmployeeWageBuilder employeeWageBuilder = new EmployeeWageBuilder();
+
+        employeeWageBuilder.addCompanyEmpWage("D-MART",20,20,100);
+        System.out.println();
+        employeeWageBuilder.addCompanyEmpWage("Reliance Retail",10,30,200);
+        employeeWageBuilder.computeEmpWage();
+    }
     // displays all information on console
-    public static void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours, int totalEmpWage) {
+    public static void displayInfo(String cName, int aCount, int fTCount, int pTCount, int tHours) {
 
         System.out.println("Following gives the Employee Wage Details for the company : " + cName);
         System.out.println("Employee Absent : " + aCount + " days");
         System.out.println("Employee Full Time : " + fTCount + " days");
         System.out.println("Employee Part Time : " + pTCount + " days");
         System.out.println("Total Working Hours : " + tHours + " hours");
-        System.out.println("Employee total wage is : " + totalEmpWage + " Rs /-");
 
     }
 
