@@ -9,3 +9,6 @@
 7. This project will make use of instance method,variables and solve the problem
 8. This project will add employee wage details for multiple companies and will use oops concepts
 9. This project will display total employee wage for each company
+10. Ability to manage Employee Wage of multiple companies
+   - Note: Refactor to have one EmpWageBuilder to manage for Wage for multiple Company
+   - Create CompanyEmpWage class and let EmpWageBuilder has array of many CompanyEmpWage Object
